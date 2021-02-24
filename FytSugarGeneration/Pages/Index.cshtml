@@ -50,6 +50,9 @@
                 <el-form-item label="命名空间">
                     <el-input v-model="form.namespace" style="width:300px;" placeholder="实体命名空间"></el-input>
                 </el-form-item>
+                <el-form-item label="控制器名">
+                    <el-input v-model="form.controllerName" style="width:300px;" placeholder="Api控制器名称，例如：Site"></el-input>
+                </el-form-item>
                 <el-form-item>
                     <el-button type="primary" icon="el-icon-document-copy" :disabled="generateDisabled" :loading="generateBtn" @@click="generateCode">生成代码并下载</el-button>
                     <el-button type="danger" icon="el-icon-delete" :disabled="generateDisabled" @@click="generateDelete">删除下载文件</el-button>
@@ -76,6 +79,7 @@
                 generateDisabled:true,
                 form: {
                     name: '',
+                    controllerName:'',
                     types: '1',
                     namespace:'',
                     checkedTable:[],
@@ -116,7 +120,7 @@
             generateCode() {
                 this.generateBtn = true;
                 var that = this;
-                var param = { types: this.form.types, tableNames: this.form.checkedTable, namespace: this.form.namespace, connection: this.formDb };
+                var param = { types: this.form.types, tableNames: this.form.checkedTable, namespace: this.form.namespace, controllerName: this.form.controllerName, connection: this.formDb };
                 axios.post('?handler=generate', param)
                     .then(function (response) {
                         that.generateBtn = false;

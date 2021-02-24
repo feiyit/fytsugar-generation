@@ -13,7 +13,7 @@ namespace FytSoa.Application.Interfaces
         /// 查询所有
         /// </summary>
         /// <returns></returns>
-        Task<ApiResult<List<{TableName}>>> GetList(PageParam param);
+        Task<ApiResult<PageResult<{TableName}>>> GetPages(PageParam param);
 
         /// <summary>
         /// 添加

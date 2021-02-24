@@ -35,6 +35,11 @@ namespace FytSugar.Builder
         public string Namespace { get; set; }
 
         /// <summary>
+        /// 控制器的名字
+        /// </summary>
+        public string ControllerName { get; set; }
+
+        /// <summary>
         /// 生成类型 1=全部表   2=部分表
         /// </summary>
         public int Types { get; set; } = 1;

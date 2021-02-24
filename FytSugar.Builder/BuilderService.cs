@@ -37,7 +37,7 @@ namespace FytSugar.Builder
             var result = JResult<string>.Success();
             try
             {
-                var _tempPath = DateTime.Now.GetTotalMilliseconds().ToString();
+                var _tempPath = DateTime.Now.ToString("yyyyMMdd");
                 var path = "/wwwroot/generate/" + _tempPath;
                 FileHelper.CreateFiles("/wwwroot/generate/zip/");
                 var db = new SugarInstance().GetInstance(createModel.connection);
@@ -51,6 +51,8 @@ namespace FytSugar.Builder
                 var iserviceTemp = FileHelper.ReadFile("/Template/IService.html");
                 //服务实现
                 var serviceTemp = FileHelper.ReadFile("/Template/Service.html");
+                //Api控制器
+                var apiTemp = FileHelper.ReadFile("/Template/ApiController.html");
                 var tableList = new List<string>();
                 if (createModel.Types==1)
                 {
@@ -104,6 +106,12 @@ namespace FytSugar.Builder
                     string serviceString = serviceTemp.Replace("{NameSpace}", createModel.Namespace)
                         .Replace("{TableName}", modelName);
                     FileHelper.WriteFile(path + "/Service/", modelName + "Service.cs", serviceString);
+
+                    //Api控制器
+                    string apiString = apiTemp.Replace("{NameSpace}", createModel.Namespace)
+                        .Replace("{TableName}", modelName)
+                        .Replace("{ApiName}", createModel.ControllerName);
+                    FileHelper.WriteFile(path + "/Controller/", createModel.ControllerName + "Controller.cs", apiString);
                 }
                 var nowpath = FileHelper.MapPath("/wwwroot/generate/zip/"+ _tempPath + ".zip");
                 ZipHelper.CreateZip(FileHelper.MapPath(path), nowpath);

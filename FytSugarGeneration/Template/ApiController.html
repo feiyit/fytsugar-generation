@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using FytSoa.Application.Interfaces;
+using FytSoa.Domain.Models.Cms;
+using FytSoa.Infra.Common;
+using Microsoft.AspNetCore.Mvc;
+
+namespace FytSoa.Services.Api.Controllers.{NameSpace}
+{
+    [Route("api/[controller]")]
+    public class {ApiName}Controller : ControllerBase
+    {
+        private readonly I{TableName}Service _thisService;
+        public {ApiName}Controller(I{TableName}Service thisService)
+        {
+            _thisService = thisService;
+        }
+
+        [HttpGet]
+        public async Task<ApiResult<PageResult<{TableName}>>> Get(PageParam param) => await _thisService.GetPages(param);
+
+        [HttpPost]
+        public async Task<ApiResult<int>> Post([FromBody] {TableName} m) => await _thisService.Add(m);
+
+        [HttpPut]
+        public async Task<ApiResult<int>> Put([FromBody] {TableName} m) => await _thisService.Update(m);
+
+        [HttpDelete("{id}")]
+        public async Task<ApiResult<int>> Delete(string id) => await _thisService.Delete(id);
+    }
+}
