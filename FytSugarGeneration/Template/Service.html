@@ -20,11 +20,10 @@ namespace FytSoa.Application.Services {
         /// </summary>
         /// <returns></returns>
         public async Task<ApiResult<PageResult<{TableName}>>> GetPages (PageParam param) {
-            var result = JResult<PageResult<{TableName}>>.Success ();
             try {
                 var where = PredicateBuilder.New<{TableName}> (m => true);
-                result.Data = await _thisRepository.GetPageResult (where, m => m.Sort, 1, param.page, param.limit);
-                return result;
+                var data = await _thisRepository.GetPageResult (where, m => m.Sort, 1, param.page, param.limit);
+                return JResult<PageResult<{TableName}>>.Success(data);
             } catch (Exception ex) {
                 return JResult<PageResult<{TableName}>>.Error (ex.Message);
             }
@@ -35,11 +34,10 @@ namespace FytSoa.Application.Services {
         /// </summary>
         /// <returns></returns>
         public async Task<ApiResult<int>> Add ({TableName} model) {
-            var result = JResult<int>.Success ();
             try {
                 model.Id = Unique.Id ();
-                result.Data = await _thisRepository.AddAsync (model);
-                return result;
+                var data = await _thisRepository.AddAsync (model);
+                return JResult<int>.Success(data)
             } catch (Exception ex) {
                 return JResult<int>.Error (ex.Message);
             }
@@ -50,10 +48,9 @@ namespace FytSoa.Application.Services {
         /// </summary>
         /// <returns></returns>
         public async Task<ApiResult<int>> Update ({TableName} model) {
-            var result = JResult<int>.Success ();
             try {
-                result.Data = await _thisRepository.UpdateAsync (model);
-                return result;
+                var data = await _thisRepository.UpdateAsync (model);
+                return JResult<int>.Success(data);
             } catch (Exception ex) {
                 return JResult<int>.Error (ex.Message);
             }
@@ -64,10 +61,9 @@ namespace FytSoa.Application.Services {
         /// </summary>
         /// <returns></returns>
         public async Task<ApiResult<int>> Delete (string ids) {
-            var result = JResult<int>.Success ();
             try {
-                result.Data = await _thisRepository.DeleteAsync (m => ids.StrToListLong ().Contains (m.Id));
-                return result;
+                var data = await _thisRepository.DeleteAsync (m => ids.StrToListLong ().Contains (m.Id));
+                return JResult<int>.Success(data);
             } catch (Exception ex) {
                 return JResult<int>.Error (ex.Message);
             }

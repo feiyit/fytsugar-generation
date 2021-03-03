@@ -10,23 +10,43 @@ using Microsoft.AspNetCore.Mvc;
 namespace FytSoa.Services.Api.Controllers.{NameSpace}
 {
     [Route("api/[controller]")]
-    public class {ApiName}Controller : ControllerBase
+    public class {ApiName}Controller : ApiControllerBase
     {
         private readonly I{TableName}Service _thisService;
         public {ApiName}Controller(I{TableName}Service thisService)
         {
             _thisService = thisService;
         }
-
+        
+        /// <summary>
+        /// 查询所有
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ApiResult<PageResult<{TableName}>>> Get(PageParam param) => await _thisService.GetPages(param);
 
+        /// <summary>
+        /// 添加
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ApiResult<int>> Post([FromBody] {TableName} m) => await _thisService.Add(m);
 
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
         [HttpPut]
         public async Task<ApiResult<int>> Put([FromBody] {TableName} m) => await _thisService.Update(m);
 
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="id">支持多个逗号分隔</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ApiResult<int>> Delete(string id) => await _thisService.Delete(id);
     }
