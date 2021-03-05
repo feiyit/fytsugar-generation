@@ -37,7 +37,7 @@ namespace FytSoa.Application.Services {
             try {
                 model.Id = Unique.Id ();
                 var data = await _thisRepository.AddAsync (model);
-                return JResult<int>.Success(data)
+                return JResult<int>.Success(data);
             } catch (Exception ex) {
                 return JResult<int>.Error (ex.Message);
             }
